@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あっかーのあまりにもよくわかるexecute</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <h1>あっかーのあまりにもよくわかるexecute</h1>
+
+    </header>
+    <main>
+        <div id="what-is-excute" class="discribe-block">
+            <h2 class="subtitle">そもそもexecuteとは</h2>
+            <div class="discribe">
+                <ul class="discribe-list">
+                    <li>- 特定の条件下にのみコマンドを動かしたい！(プログラミング言語でいうif文)</li>
+                    <li>- 実行対象を選びたい！(後述)</li>
+                </ul>
+
+                <p>こう言った時に主に使います。例えばプレイヤーが特定の座標にいる時に<code>setblock</code>コマンドを実行したい！等に使う感じですね。</p>
+            </div>
+        </div>
+
+        <div id="if-execute" class="discribe-block">
+            <h2 class="subtitle">if文のようなexecuteの使い方</h2>
+            <div class="discribe">
+
+                <p>まずは以下のコマンドを見てください。</p>
+                <code class="emphasis block">/execute @e[type=villager] ~ ~ ~ setblock 100 40 5 minecraft:redstone_block</code>
+                <p>ここで大事なのは<code>@e[type=villager]</code>の部分です。</p>
+                <p>まず<code>@e</code>についてです。これはエンティティを表しています。(村人やゾンビのようなモブや矢とか雪玉も含まれる)<br>エンティティとは基本的にはMinecraft上における<span>ブロック以外の存在</span>だと思ってくれて大丈夫です。</p>
+                <p>@e以外にも色々あり、以下の通りになります。</p>
+
+                <ul class="discribe-list">
+                    <li>- @a => 全てのプレイヤー及びエンティティ</li>
+                    <li>- @p => コマンドの実行地点から最も近いプレイヤー</li>
+                    <li>- @s => コマンドを実行した本人(コマンドブロックから実行した場合本人が存在しなくなるので動かない)</li>
+                    <li>- @c => エージェント</li>
+                    <li>- ほかにもあるが割愛</li>
+                </ul>
+
+                <p>次に<code>[type=villager]</code>の部分です。typeはエンティティの種類を表しておりvillagerは村人を指しています。<br>つまりこのコマンドの意味は<span>村人がいた時にsetblockコマンドを実行する</span>といった意味になります。</p>
+
+                <h3 class="subsubtitle">座標のif</h3>
+
+                <p>次は以下のコマンドを見てください</p>
+                <code class="emphasis block">/execute @c[x=100,y=30,z=20] ~ ~ ~ setblock 100 40 5 minecraft:redstone_block</code>
+                <p><code>@c</code>についてはエージェントのことですね。その次にx,y,zと並んでいますがこれは座標のことです。<br>察しの良い方ならわかったかもしれませんが、これは<span>もしエージェントがx=100,y=30,z=20の位置にいた時ににsetblockコマンドを実行する</span>と言った意味になります。</p>
+                
+                <h3 class="subsubtitle">高度な座標のif</h3>
+                <p>ただ、特定の座標というよりは特定の範囲内にいる時にコマンドを実行したい！ってこともありますよね。(100, 30, 20 から 120, 30, 17の四角形の範囲内にエージェントが入った時に実行等)<br>この場合以下のように記述します。</p>
+                <code class="emphasis block">/execute @c[x=100,y=30,z=20,dx=20,dy=0,dz=-3] ~ ~ ~ setblock 100 40 5 minecraft:redstone_block</code>
+                <p>よく見てみると<code>dx=20,dy=0,dz=-3</code>といったものが追加されていますね。<br>
+                    これは基準点となる<code>x=100,y=30,z=20</code>から加算される値を表しており、加算された値が範囲における終点になります。<br>
+                    つまり終点の座標は<span>x=100+20, y=30+0, z=20-3</span>の位置になります。
+                </p>
+
+                <div class="quiz">
+                    <h3 class="quiz-title">ここでクイズ！</h3>
+                    <p>以下のコマンドはどういった時にsetblockコマンドが動く？</p>
+                    <code class="emphasis block">/execute @e[type=zombie,x=120,y=100,z=20] ~ ~ ~ setblock 20 10 5 minecraft:redstone_block</code>
+                    <div class="quiz-select">
+                        <div class="quiz-option">
+                            <input type="radio" name="one" id="q1-1" class="q1" value="q1-1">
+                            <label for="q1-1">x=120,y=100,z=20の座標にいるエージェント</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" name="one" id="q1-2" class="q1" value="q1-2">
+                            <label for="q1-2">x=12,y=10,z=2の座標にいるプレイヤー</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" name="one" id="q1-3" class="q1" value="q1-3">
+                            <label for="q1-3">x=120,y=100,z=20の座標にいるゾンビ</label>
+                        </div>
+                        
+
+                    </div>
+                    <p id="quiz-answer1" class="answer"></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="scoreboard-execute" class="discribe-block">
+            <h2 class="subtitle">スコアボードを利用したexecute</h2>
+            <div class="discribe">
+                <h3 class="subsubtitle">そもそもスコアボードとは</h3>
+                <ul class="discribe-list">
+                    <li>- Minecraft上で扱える変数のこと</li>
+                    <li>- スコアボードコマンドを使えば変数の加算減算等ができる</li>
+                </ul>
+
+                <p>まずexecuteを説明する前にscoreboardについて説明します。まず上記に変数とありますが、変数を作成するためには以下のコマンドを入力します</p>
+                <code class="emphasis block">/scoreboard objectives add 変数名 dummy</code>
+
+                <p>こうすると変数が作られます。</p>
+
+                <h3 class="subsubtitle">代入</h3>
+                <p>プログラミング言語でいう<code>変数名=100</code>のようなことをしたい場合以下のようなコマンドを入力します。</p>
+                <code class="emphasis block">/scoreboard players set 変数名 100</code>
+
+                <p><code>set</code>が代入をするといったことを表しており、変数名の後ろにある<code>100</code>が代入したい数値になります。</p>
+                
+                <h3 class="subsubtitle">加算減算</h3>
+                <p>プログラミング言語でいう<code>変数名+=1</code>や<code>変数名-=1</code>のようなことをしたい場合は以下のようなコマンドを入力します。</p>
+                <code class="emphasis block">/scoreboard players add @s 変数名 1</code>
+                <code class="emphasis block">/scoreboard players add @s 変数名 -1</code>
+
+                <p><code>add</code>が現在の値にnを足すといったことを表しており、変数名の後ろにある<code>1</code>や<code>-1</code>がその数値になります。</p>
+
+                <h3 class="subsubtitle">scoreboardとexecute①</h3>
+                <p>本題にもどります。以上の変数とexecuteを組み合わせれば「もし変数が10のとき何かする」等プログラミングでよく使われるようなことができそうですよね？<br>
+                    executeコマンドはscoreboardの値を取り出すことができ、以下の通りになります。
+                </p>
+                <code class="emphasis block">/execute @a[scores={変数名=10}] ~ ~ ~ setblock 10 5 10 minecraft:redstone_block</code>
+
+                <p>大事なのは<code>[scores={変数名=10}]</code>です。まず<code>scores</code><span>(最後にsがつくので注意！)</span>は変数を表しています。<br>
+                    この中に{}を書き中に<code>変数名=条件の数値</code>と書けばその数値の条件の時だけコマンドが動きます。
+                </p>
+                <p>つまり、上記のコマンドの意味は<span>変数が10の時setblockコマンドを実行する</span>といった意味になります。</p>
+
+                <p>ちなみに</p>
+                <code class="emphasis block">/execute @a[scores={変数名=10,変数名その2=20}] ~ ~ ~ setblock 10 5 10 minecraft:redstone_block</code>
+                <p>と入力すれば<span>二つの値が同時に満たす時にsetblockコマンドを実行する</span>と言った意味にすることもできます。</p>
+
+                <h3 class="subsubtitle">scoreboardとexecute②</h3>
+                <p>先ほどまではプログラミング言語でいう<code>if(変数名 == 10)</code>のやり方を説明しました。しかし<code>if(変数名 &gt;= 10)</code>とかもやりたいですよね？<br>
+                    executeはそのような処理をすることもでき、以下の通りになります。
+                </p>
+                <code class="emphasis block">/execute @a[scores={変数名=10..}] ~ ~ ~ setblock 10 5 10 minecraft:redstone_block</code>
+                <p>注目して欲しいところは<code>10..</code>の部分です。<span>後ろ</span>に..をつけることによって<span>以上</span>を表すことができます</p>
+                <p>一方で以下を表したい場合は</p>
+                <code class="emphasis block">/execute @a[scores={変数名=..10}] ~ ~ ~ setblock 10 5 10 minecraft:redstone_block</code>
+                <p>となり逆に<code>10</code>の<span>前</span>に<code>..</code>をつけます。</p>
+                <p>さらに以下のように記述すれば</p>
+                <code class="emphasis block">/execute @a[scores={変数名=10..20}] ~ ~ ~ setblock 10 5 10 minecraft:redstone_block</code>
+                <p><span>10以上20以下の時にsetblockコマンドを実行</span>と言った意味になります。</p>
+
+                <div class="quiz">
+                    <h3 class="quiz-title">ここでクイズ！</h3>
+                    <p>以下のコマンドはどういった時にsetblockコマンドが動く？</p>
+                    <code class="emphasis block">/execute @a[x=120,y=100,z=20,scores={hoge=10..,fuga=..20}] ~ ~ ~ setblock 20 10 5 minecraft:redstone_block</code>
+                    <div class="quiz-select">
+                        <div class="quiz-option">
+                            <input type="radio" name="two" id="q2-1" class="q2" value="q2-1">
+                            <label for="q2-1">x=120,y=100,z=20の座標にいて、なおかつ変数hogeが10以上でfugaが20以下</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" name="two" id="q2-2" class="q2" value="q2-2">
+                            <label for="q2-2">x=120,y=100,z=20の座標にいて、なおかつ変数hogeが10以上でfugaが20未満</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" name="two" id="q2-3" class="q2" value="q2-3">
+                            <label for="q2-3">x=120,y=100,z=20の座標にいて、なおかつ変数hogeが10以下でfugaが20以上</label>
+                        </div>
+                        
+
+                    </div>
+                    <p id="quiz-answer2" class="answer"></p>
+                </div>
+
+                <div class="quiz">
+                    <h3 class="quiz-title">ここでクイズ！</h3>
+                    <p>以下のコマンドはどういった意味？</p>
+                    <code class="emphasis block">/execute @a[scores={timer=1..}] ~ ~ ~ scoreboard players add @s timer -1</code>
+                    <div class="quiz-select">
+                        <div class="quiz-option">
+                            <input type="radio" name="three" id="q3-1" class="q3" value="q3-1">
+                            <label for="q3-1">timerが1以上のときtimerを1ずつ減らす</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" name="three" id="q3-2" class="q3" value="q3-2">
+                            <label for="q3-2">timerが1の時timerを1ずつ減らす</label>
+                        </div>
+                        <div class="quiz-option">
+                            <input type="radio" name="three" id="q3-3" class="q3" value="q3-3">
+                            <label for="q3-3">timerが1以上の時timerを1ずつ足す</label>
+                        </div>
+                        
+
+                    </div>
+                    <p id="quiz-answer3" class="answer"></p>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="position-excute" class="discribe-block">
+            <h2 class="subtitle">実行対象を選ぶ</h2>
+            <div class="discribe">
+                <p>実行対象を選ぶと聞いて疑問符が浮かぶ人も多いと思います。例えば以下のコマンドを実行してみましょう。</p>
+                <code>/execute @e[type=villager] ~ ~ ~ setblock ~ ~5 ~ minecraft:stone</code>
+                <img src="img/execute1.gif">
+                <p>複数の石ブロックが村人の頭上に出現したのがわかりましたか？</p>
+                <p>executeコマンドは後ろに条件にマッチした時に動かすコマンドを書きますよね？(上記の場合setblock)<br>
+                    実はそのコマンドは<span>条件にマッチした存在がコマンドを実行しています！</span><br>
+                    つまり、今回は村人が5人いて5人とも条件にマッチしているので<span>村人5人がコマンドを実行する</span>といったことが起こっています！
+                </p>
+
+                <h3 class="subsubtitle">何が嬉しいか</h3>
+                <p>こういった高度なコマンドを実行する際はコマンドブロックから実行することが多いと思います。しかし<code>@s</code>等コマンドブロックだけでは実行できないものも存在します。これをすることによって実行対象をコマンドブロックからプレイヤーに変更するなどしてコマンドブロックだけでは実行できないコマンドも動かせてしまうといったわけですね！</p>
+            </div>
+        </div>
+
+
+
+
+    </main>
+
+    <script src="index.js"></script>
+</body>
+</html>

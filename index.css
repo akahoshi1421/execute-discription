@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  padding: 20px 20px;
+  width: 100vw;
+  background-color: #e8e4e4;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+header h1 {
+  font-size: 2rem;
+}
+
+main {
+  margin-top: 100px;
+  padding: 10px;
+  position: relative;
+}
+main .discribe-block {
+  margin-bottom: 30px;
+}
+main .discribe-block .subtitle {
+  font-size: 1.5rem;
+  width: 100%;
+  padding: 10px;
+  position: relative;
+}
+main .discribe-block .subtitle::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 70%;
+  height: 3px;
+  background-color: #e8e4e4;
+}
+main .discribe-block .discribe {
+  padding: 10px 10px 10px 60px;
+}
+main .discribe-block .discribe img {
+  display: block;
+  max-width: 70vw;
+  max-height: 60vh;
+}
+main .discribe-block .discribe .subsubtitle {
+  font-size: 1.3rem;
+  padding: 10px;
+  border-left: 5px solid rgb(247, 34, 34);
+  margin-top: 20px;
+}
+main .discribe-block .discribe .discribe-list {
+  padding: 10px;
+  background-color: rgb(136, 242, 145);
+  border-radius: 10px;
+  list-style: none;
+  box-shadow: 6px 3px 15px -3px #777777;
+  margin: 20px 0px;
+}
+main .discribe-block .discribe .discribe-list li {
+  padding: 10px 10px;
+  font-weight: bold;
+}
+main .discribe-block .discribe p {
+  font-size: 1.2rem;
+  line-height: 200%;
+}
+main .discribe-block .discribe p span {
+  color: red;
+  font-weight: bolder;
+}
+main .discribe-block .discribe .quiz {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 6px 3px 15px -3px #777777;
+  background-color: #cae8ef;
+}
+main .discribe-block .discribe .quiz .quiz-title {
+  font-size: 1.8rem;
+}
+main .discribe-block .discribe .quiz .quiz-select {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+main .discribe-block .discribe .quiz .quiz-select .quiz-option {
+  display: flex;
+  align-items: center;
+}
+main .discribe-block .discribe .quiz .quiz-select .quiz-option input {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+main .discribe-block .discribe .quiz .answer {
+  color: red;
+  font-weight: bolder;
+  text-align: center;
+}
+
+code {
+  background-color: #e8e4e4;
+  color: rgb(253, 29, 88);
+  padding: 0px 5px;
+  font-size: 1.2rem;
+}
+
+.emphasis {
+  margin: 15px 0px;
+}
+
+.block {
+  display: block;
+}
+
+hr {
+  margin: 30px 0px;
+}/*# sourceMappingURL=index.css.map */
